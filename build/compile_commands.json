@@ -1,0 +1,230 @@
+[
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/laporan.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/laporan.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/laporan.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/laporan.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/main.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/main.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/main.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/main.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/operasi_file.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/operasi_file.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/operasi_file.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/operasi_file.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/operasi_file/baca_file.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/operasi_file/baca_file.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/operasi_file/baca_file.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/operasi_file/baca_file.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/operasi_file/baca_transaksi_dari_file.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/operasi_file/baca_transaksi_dari_file.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/operasi_file/baca_transaksi_dari_file.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/operasi_file/baca_transaksi_dari_file.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/operasi_file/simpan_transaksi_ke_file.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/operasi_file/simpan_transaksi_ke_file.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/operasi_file/simpan_transaksi_ke_file.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/operasi_file/simpan_transaksi_ke_file.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/operasi_file/tulis_file.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/operasi_file/tulis_file.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/operasi_file/tulis_file.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/operasi_file/tulis_file.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/analisis_kondisi_keuangan.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/analisis_kondisi_keuangan.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/analisis_kondisi_keuangan.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/analisis_kondisi_keuangan.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/hitung_rata_rata_pengeluaran.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/hitung_rata_rata_pengeluaran.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/hitung_rata_rata_pengeluaran.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/hitung_rata_rata_pengeluaran.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/hitung_realisasi_anggaran.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/hitung_realisasi_anggaran.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/hitung_realisasi_anggaran.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/hitung_realisasi_anggaran.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/hitung_saldo.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/hitung_saldo.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/hitung_saldo.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/hitung_saldo.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/hitung_total_pemasukan.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/hitung_total_pemasukan.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/hitung_total_pemasukan.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/hitung_total_pemasukan.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/hitung_total_pengeluaran.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/hitung_total_pengeluaran.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/hitung_total_pengeluaran.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/hitung_total_pengeluaran.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/kesimpulan_kondisi_keuangan.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/kesimpulan_kondisi_keuangan.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/perhitungan/kesimpulan_kondisi_keuangan.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/perhitungan/kesimpulan_kondisi_keuangan.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/edit_pos_anggaran.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/edit_pos_anggaran.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/edit_pos_anggaran.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/edit_pos_anggaran.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/hapus_pos_anggaran.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/hapus_pos_anggaran.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/hapus_pos_anggaran.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/hapus_pos_anggaran.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/input_pos_anggaran.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/input_pos_anggaran.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/input_pos_anggaran.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/input_pos_anggaran.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/simpan_pos_anggaran.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/simpan_pos_anggaran.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/simpan_pos_anggaran.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/simpan_pos_anggaran.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/update_file_pos_anggaran.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/update_file_pos_anggaran.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/update_file_pos_anggaran.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/update_file_pos_anggaran.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/validasi_edit_pos.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/validasi_edit_pos.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/validasi_edit_pos.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/validasi_edit_pos.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/validasi_hapus_pos.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/validasi_hapus_pos.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/validasi_hapus_pos.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/validasi_hapus_pos.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/validasi_pos_anggaran.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/validasi_pos_anggaran.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/pos_anggaran/validasi_pos_anggaran.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/pos_anggaran/validasi_pos_anggaran.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/tampilan.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/tampilan.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/tampilan.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/tampilan.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/tampilan/tampilkan_menu.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/tampilan/tampilkan_menu.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/tampilan/tampilkan_menu.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/tampilan/tampilkan_menu.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/tampilan/tampilkan_pesan_error.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/tampilan/tampilkan_pesan_error.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/tampilan/tampilkan_pesan_error.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/tampilan/tampilkan_pesan_error.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/tampilan/tampilkan_pesan_sukses.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/tampilan/tampilkan_pesan_sukses.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/tampilan/tampilkan_pesan_sukses.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/tampilan/tampilkan_pesan_sukses.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/transaksi.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/transaksi.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/transaksi.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/transaksi.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/transaksi/generate_kode_transaksi.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/transaksi/generate_kode_transaksi.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/transaksi/generate_kode_transaksi.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/transaksi/generate_kode_transaksi.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/transaksi/input_transaksi.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/transaksi/input_transaksi.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/transaksi/input_transaksi.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/transaksi/input_transaksi.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/transaksi/simpan_transaksi.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/transaksi/simpan_transaksi.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/transaksi/simpan_transaksi.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/transaksi/simpan_transaksi.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/transaksi/validasi_transaksi.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/transaksi/validasi_transaksi.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/transaksi/validasi_transaksi.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/transaksi/validasi_transaksi.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/validasi.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/validasi.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/validasi.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/validasi.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/validasi/apakah_jenis_transaksi_valid.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/validasi/apakah_jenis_transaksi_valid.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/validasi/apakah_jenis_transaksi_valid.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/validasi/apakah_jenis_transaksi_valid.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/validasi/apakah_pos_duplikat.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/validasi/apakah_pos_duplikat.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/validasi/apakah_pos_duplikat.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/validasi/apakah_pos_duplikat.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/validasi/apakah_positif.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/validasi/apakah_positif.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/validasi/apakah_positif.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/validasi/apakah_positif.c.o"
+},
+{
+  "directory": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build",
+  "command": "/usr/bin/cc  -I/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/include -std=gnu99 -arch arm64 -o CMakeFiles/keuangan_mahasiswa.dir/src/validasi/apakah_tidak_kosong.c.o -c /Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/validasi/apakah_tidak_kosong.c",
+  "file": "/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/src/validasi/apakah_tidak_kosong.c",
+  "output": "CMakeFiles/keuangan_mahasiswa.dir/src/validasi/apakah_tidak_kosong.c.o"
+}
+]

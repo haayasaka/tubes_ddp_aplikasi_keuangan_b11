@@ -1,0 +1,3 @@
+/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build/CMakeFiles/keuangan_mahasiswa.dir
+/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build/CMakeFiles/edit_cache.dir
+/Users/hafizfs/Documents/GitHub/tubes_ddp_aplikasi_keuangan_b11/build/CMakeFiles/rebuild_cache.dir
