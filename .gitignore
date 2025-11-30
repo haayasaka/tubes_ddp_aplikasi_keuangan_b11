@@ -3,3 +3,4 @@ build/
 keuangan
 .cache/
 .zed/
+.DS_Store
