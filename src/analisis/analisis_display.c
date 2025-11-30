@@ -35,13 +35,13 @@ void tampilkan_analisis_bulan(int bulan) {
         (void)next_y; /* unused */
 
         /* Navigation menu */
-        tui_draw_hline(tui_get_height() - 6, 2, 60, '-');
+        tui_draw_hline(tui_get_height() - 7, 2, 60, '-');
         tui_bold_on();
-        tui_print(tui_get_height() - 5, 2, "MENU NAVIGASI:");
+        tui_print(tui_get_height() - 6, 2, "MENU NAVIGASI:");
         tui_bold_off();
-        tui_print(tui_get_height() - 4, 4, "1. Tampilkan Semua Transaksi");
-        tui_print(tui_get_height() - 3, 4, "2. Tampilkan Transaksi Pengeluaran");
-        tui_print(tui_get_height() - 2, 4, "3. Tampilkan Transaksi Pemasukan");
+        tui_print(tui_get_height() - 5, 4, "1. Tampilkan Semua Transaksi");
+        tui_print(tui_get_height() - 4, 4, "2. Tampilkan Transaksi Pengeluaran");
+        tui_print(tui_get_height() - 3, 4, "3. Tampilkan Transaksi Pemasukan");
 
         display_footer("1-3: Pilih Menu | ESC: Kembali");
         tui_refresh();
@@ -145,7 +145,7 @@ static int display_laporan_keuangan(int bulan, AnalisisKeuangan *analisis) {
             format_rupiah(pos_list[i].realisasi, realisasi_str);
             format_saldo(pos_list[i].sisa, sisa_str);
 
-            const char *status_str = (pos_list[i].status == STATUS_AMAN) ? "SAFE" : "UNSAFE";
+            const char *status_str = (pos_list[i].status == STATUS_AMAN) ? "AMAN" : "TIDAK AMAN";
             int status_color = (pos_list[i].status == STATUS_AMAN) ? COLOR_PAIR_GREEN : COLOR_PAIR_RED;
 
             tui_printf(y, 4, "%-15s %12s %12s %12s %5d ",
