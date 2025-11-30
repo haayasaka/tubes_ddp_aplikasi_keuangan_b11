@@ -1,2 +1,5 @@
 *.o
 build/
+keuangan
+.cache/
+.zed/
