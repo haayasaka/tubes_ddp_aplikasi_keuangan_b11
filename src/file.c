@@ -1,10 +1,3 @@
-/**
- * @file file.c
- * @brief Implementasi modul operasi file
- * @author Kelompok B11
- * @date 2025
- */
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -15,14 +8,48 @@
 #include "file.h"
 #include "utils.h"
 
-/* --- file_core.c --- */
+/* ===== FUNGSI HELPER INTERNAL ===== */
+
+/**
+ * Helper: Konversi string ke int yang aman (menangani NULL)
+ */
+static int aman_atoi(const char *str) {
+    if (str == NULL) return 0;
+    return atoi(str);
+}
+
+/**
+ * Helper: Konversi string ke unsigned long long yang aman
+ */
+static unsigned long long aman_atoull(const char *str) {
+    if (str == NULL) return 0;
+    return strtoull(str, NULL, 10);
+}
+
+/**
+ * Helper: Konversi string ke double yang aman
+ */
+static double aman_atof(const char *str) {
+    if (str == NULL) return 0.0;
+    return atof(str);
+}
+
+/**
+ * Helper: Konversi string ke long long yang aman
+ */
+static long long aman_atoll(const char *str) {
+    if (str == NULL) return 0;
+    return strtoll(str, NULL, 10);
+}
+
+/* ===== IMPLEMENTASI FILE CORE (Operasi Dasar) ===== */
 
 /**
  * Cek apakah file ada
  */
-int file_exists(const char *filename) {
+int cek_file_ada(const char *filename) {
     if (filename == NULL) return 0;
-    
+
     FILE *f = fopen(filename, "r");
     if (f != NULL) {
         fclose(f);
@@ -34,9 +61,9 @@ int file_exists(const char *filename) {
 /**
  * Buat file baru (kosong)
  */
-int file_create(const char *filename) {
+int buat_file(const char *filename) {
     if (filename == NULL) return 0;
-    
+
     FILE *f = fopen(filename, "w");
     if (f == NULL) {
         return 0;
@@ -48,64 +75,100 @@ int file_create(const char *filename) {
 /**
  * Buka file untuk dibaca
  */
-FILE* file_open_read(const char *filename) {
+FILE* buka_file_baca(const char *filename) {
     if (filename == NULL) return NULL;
-    
+
     return fopen(filename, "r");
 }
 
 /**
  * Buka file untuk ditulis (overwrite)
  */
-FILE* file_open_write(const char *filename) {
+FILE* buka_file_tulis(const char *filename) {
     if (filename == NULL) return NULL;
-    
+
     return fopen(filename, "w");
 }
 
 /**
  * Buka file untuk append
  */
-FILE* file_open_append(const char *filename) {
+FILE* buka_file_tambah(const char *filename) {
     if (filename == NULL) return NULL;
-    
+
     return fopen(filename, "a");
 }
 
 /**
- * Generate nama file dengan suffix bulan
- * I.S.: base string, bulan integer, result buffer
- * F.S.: result berisi path file lengkap
+ * Membaca seluruh isi file ke buffer
  */
-void get_filename_bulan(const char *base, int bulan, char *result, int result_size) {
-    if (base == NULL || result == NULL || result_size <= 0) return; 
-    
-    /* Validasi bulan */
-    if (bulan < BULAN_MIN || bulan > BULAN_MAX) {
-        bulan = 1;  /* Default ke Januari jika invalid */
+int baca_semua_file(const char *filename, char *buffer, int buffer_size) {
+    if (filename == NULL || buffer == NULL || buffer_size <= 0) {
+        return 0;
     }
-    
-    /* Format: data/base_MM.txt */
-    snprintf(result, result_size, "%s%s_%s%s", DATA_DIR, base, get_kode_bulan(bulan), FILE_EXTENSION);
+
+    FILE *f = buka_file_baca(filename);
+    if (f == NULL) {
+        buffer[0] = '\0';
+        return 0;
+    }
+
+    int total = fread(buffer, 1, buffer_size - 1, f);
+    buffer[total] = '\0';
+
+    fclose(f);
+    return total;
 }
 
 /**
- * Generate nama file transaksi
- * I.S.: result buffer
- * F.S.: result berisi path file transaksi
+ * Menulis string ke file (overwrite)
  */
-void get_filename_transaksi(char *result, int result_size) {
-    if (result == NULL || result_size <= 0) return; 
-    
-    snprintf(result, result_size, "%s%s%s", DATA_DIR, FILE_TRANSAKSI, FILE_EXTENSION);
+int tulis_semua_file(const char *filename, const char *content) {
+    if (filename == NULL) return 0;
+
+    FILE *f = buka_file_tulis(filename);
+    if (f == NULL) {
+        return 0;
+    }
+
+    if (content != NULL) {
+        fputs(content, f);
+    }
+
+    fclose(f);
+    return 1;
+}
+
+/**
+ * Menambahkan baris ke akhir file
+ */
+int tambah_baris_file(const char *filename, const char *line) {
+    if (filename == NULL || line == NULL) return 0;
+
+    /* Jika file belum ada, buat dulu */
+    if (!cek_file_ada(filename)) {
+        if (!buat_file(filename)) {
+            return 0;
+        }
+    }
+
+    FILE *f = buka_file_tambah(filename);
+    if (f == NULL) {
+        return 0;
+    }
+
+    fprintf(f, "%s\n", line);
+    fclose(f);
+
+    return 1;
 }
 
 /**
  * Memastikan direktori data ada
  */
-int ensure_data_directory(void) {
+int pastikan_direktori_data(void) {
     struct stat st = {0};
-    
+
     /* Cek apakah direktori sudah ada */
     if (stat(DATA_DIR, &st) == -1) {
         /* Buat direktori dengan permission 0755 */
@@ -117,112 +180,40 @@ int ensure_data_directory(void) {
             return 0;  /* Gagal membuat direktori */
         }
     }
-    
+
     return 1;
 }
 
 /**
- * Membaca seluruh isi file ke buffer
+ * Generate nama file dengan suffix bulan
  */
-int file_read_all(const char *filename, char *buffer, int buffer_size) {
-    if (filename == NULL || buffer == NULL || buffer_size <= 0) {
-        return 0;
+void dapatkan_nama_file_bulan(const char *base, int bulan, char *result, int result_size) {
+    if (base == NULL || result == NULL || result_size <= 0) return;
+
+    /* Validasi bulan */
+    if (bulan < BULAN_MIN || bulan > BULAN_MAX) {
+        bulan = 1;  /* Default ke Januari jika invalid */
     }
-    
-    FILE *f = file_open_read(filename);
-    if (f == NULL) {
-        buffer[0] = '\0';
-        return 0;
-    }
-    
-    int total = fread(buffer, 1, buffer_size - 1, f);
-    buffer[total] = '\0';
-    
-    fclose(f);
-    return total;
+
+    /* Format: data/base_MM.txt */
+    snprintf(result, result_size, "%s%s_%s%s", DATA_DIR, base, dapatkan_kode_bulan(bulan), FILE_EXTENSION);
 }
 
 /**
- * Menulis string ke file (overwrite)
+ * Generate nama file transaksi
  */
-int file_write_all(const char *filename, const char *content) {
-    if (filename == NULL) return 0;
-    
-    FILE *f = file_open_write(filename);
-    if (f == NULL) {
-        return 0;
-    }
-    
-    if (content != NULL) {
-        fputs(content, f);
-    }
-    
-    fclose(f);
-    return 1;
+void dapatkan_nama_file_transaksi(char *result, int result_size) {
+    if (result == NULL || result_size <= 0) return;
+
+    snprintf(result, result_size, "%s%s%s", DATA_DIR, FILE_TRANSAKSI, FILE_EXTENSION);
 }
 
-/**
- * Menambahkan baris ke akhir file
- */
-int file_append_line(const char *filename, const char *line) {
-    if (filename == NULL || line == NULL) return 0;
-    
-    /* Jika file belum ada, buat dulu */
-    if (!file_exists(filename)) {
-        if (!file_create(filename)) {
-            return 0;
-        }
-    }
-    
-    FILE *f = file_open_append(filename);
-    if (f == NULL) {
-        return 0;
-    }
-    
-    fprintf(f, "%s\n", line);
-    fclose(f);
-    
-    return 1;
-}
-
-/* --- file_parser.c --- */
-
-/**
- * Helper: Safe string to int conversion
- */
-static int safe_atoi(const char *str) {
-    if (str == NULL) return 0;
-    return atoi(str);
-}
-
-/**
- * Helper: Safe string to unsigned long long conversion
- */
-static unsigned long long safe_atoull(const char *str) {
-    if (str == NULL) return 0;
-    return strtoull(str, NULL, 10);
-}
-
-/**
- * Helper: Safe string to double conversion
- */
-static double safe_atof(const char *str) {
-    if (str == NULL) return 0.0;
-    return atof(str);
-}
-
-/**
- * Helper: Safe string to long long conversion
- */
-static long long safe_atoll(const char *str) {
-    if (str == NULL) return 0;
-    return strtoll(str, NULL, 10);
-}
+/* ===== IMPLEMENTASI FILE PARSER (Parsing & Formatting) ===== */
 
 /**
  * Mendapatkan label jenis transaksi
  */
-const char* get_label_jenis(int jenis) {
+const char* dapatkan_label_jenis(int jenis) {
     if (jenis == JENIS_PEMASUKAN) {
         return "Pemasukan";
     }
@@ -232,17 +223,17 @@ const char* get_label_jenis(int jenis) {
 /**
  * Konversi string jenis ke kode
  */
-int parse_jenis_transaksi(const char *jenis_str) {
+int urai_jenis_transaksi(const char *jenis_str) {
     if (jenis_str == NULL) return -1;
-    
+
     /* Case-insensitive comparison */
-    if (str_compare_nocase(jenis_str, "Pemasukan") == 0) {
+    if (banding_string_tanpa_case(jenis_str, "Pemasukan") == 0) {
         return JENIS_PEMASUKAN;
     }
-    if (str_compare_nocase(jenis_str, "Pengeluaran") == 0) {
+    if (banding_string_tanpa_case(jenis_str, "Pengeluaran") == 0) {
         return JENIS_PENGELUARAN;
     }
-    
+
     return -1;  /* Invalid */
 }
 
@@ -250,47 +241,47 @@ int parse_jenis_transaksi(const char *jenis_str) {
  * Parse baris teks ke struct Transaksi
  * Format: id|tanggal|jenis|pos|nominal|deskripsi
  */
-int parse_line_transaksi(const char *line, Transaksi *trx) {
+int urai_baris_transaksi(const char *line, Transaksi *trx) {
     if (line == NULL || trx == NULL) return 0;
-    
+
     /* Buat salinan line karena strtok memodifikasi string */
     char buffer[MAX_LINE_LENGTH];
-    str_copy_safe(buffer, line, MAX_LINE_LENGTH);
-    str_remove_newline(buffer);
-    
+    salin_string_aman(buffer, line, MAX_LINE_LENGTH);
+    hapus_newline_string(buffer);
+
     /* Parse field dengan delimiter | */
     char *token;
     int field = 0;
-    
+
     token = strtok(buffer, "|");
     while (token != NULL && field < 6) {
-        str_trim(token);
-        
+        pangkas_string(token);
+
         switch (field) {
             case 0:  /* id */
-                str_copy_safe(trx->id, token, sizeof(trx->id));
+                salin_string_aman(trx->id, token, sizeof(trx->id));
                 break;
             case 1:  /* tanggal */
-                str_copy_safe(trx->tanggal, token, sizeof(trx->tanggal));
+                salin_string_aman(trx->tanggal, token, sizeof(trx->tanggal));
                 break;
             case 2:  /* jenis */
-                trx->jenis = parse_jenis_transaksi(token);
+                trx->jenis = urai_jenis_transaksi(token);
                 break;
             case 3:  /* pos */
-                str_copy_safe(trx->pos, token, sizeof(trx->pos));
+                salin_string_aman(trx->pos, token, sizeof(trx->pos));
                 break;
             case 4:  /* nominal */
-                trx->nominal = safe_atoull(token);
+                trx->nominal = aman_atoull(token);
                 break;
             case 5:  /* deskripsi */
-                str_copy_safe(trx->deskripsi, token, sizeof(trx->deskripsi));
+                salin_string_aman(trx->deskripsi, token, sizeof(trx->deskripsi));
                 break;
         }
-        
+
         field++;
         token = strtok(NULL, "|");
     }
-    
+
     /* Minimal harus ada 5 field (deskripsi bisa kosong) */
     return (field >= 5);
 }
@@ -299,48 +290,48 @@ int parse_line_transaksi(const char *line, Transaksi *trx) {
  * Parse baris teks ke struct PosAnggaran
  * Format: no|nama|nominal|realisasi|sisa|jumlah_trx|status
  */
-int parse_line_pos(const char *line, PosAnggaran *pos) {
+int urai_baris_pos(const char *line, PosAnggaran *pos) {
     if (line == NULL || pos == NULL) return 0;
-    
+
     char buffer[MAX_LINE_LENGTH];
-    str_copy_safe(buffer, line, MAX_LINE_LENGTH);
-    str_remove_newline(buffer);
-    
+    salin_string_aman(buffer, line, MAX_LINE_LENGTH);
+    hapus_newline_string(buffer);
+
     char *token;
     int field = 0;
-    
+
     token = strtok(buffer, "|");
     while (token != NULL && field < 7) {
-        str_trim(token);
-        
+        pangkas_string(token);
+
         switch (field) {
             case 0:  /* no */
-                pos->no = safe_atoi(token);
+                pos->no = aman_atoi(token);
                 break;
             case 1:  /* nama */
-                str_copy_safe(pos->nama, token, sizeof(pos->nama));
+                salin_string_aman(pos->nama, token, sizeof(pos->nama));
                 break;
             case 2:  /* nominal */
-                pos->nominal = safe_atoull(token);
+                pos->nominal = aman_atoull(token);
                 break;
             case 3:  /* realisasi */
-                pos->realisasi = safe_atoull(token);
+                pos->realisasi = aman_atoull(token);
                 break;
             case 4:  /* sisa */
-                pos->sisa = safe_atoll(token);
+                pos->sisa = aman_atoll(token);
                 break;
             case 5:  /* jumlah_transaksi */
-                pos->jumlah_transaksi = safe_atoi(token);
+                pos->jumlah_transaksi = aman_atoi(token);
                 break;
             case 6:  /* status */
-                pos->status = safe_atoi(token);
+                pos->status = aman_atoi(token);
                 break;
         }
-        
+
         field++;
         token = strtok(NULL, "|");
     }
-    
+
     return (field >= 7);
 }
 
@@ -348,69 +339,67 @@ int parse_line_pos(const char *line, PosAnggaran *pos) {
  * Parse baris teks ke struct AnalisisKeuangan
  * Format: pemasukan|pengeluaran|rata|persen|saldo|kondisi|kesimpulan|trx_out|trx_in
  */
-int parse_line_analisis(const char *line, AnalisisKeuangan *data) {
+int urai_baris_analisis(const char *line, AnalisisKeuangan *data) {
     if (line == NULL || data == NULL) return 0;
-    
+
     char buffer[MAX_LINE_LENGTH];
-    str_copy_safe(buffer, line, MAX_LINE_LENGTH);
-    str_remove_newline(buffer);
-    
+    salin_string_aman(buffer, line, MAX_LINE_LENGTH);
+    hapus_newline_string(buffer);
+
     char *token;
     int field = 0;
-    
+
     token = strtok(buffer, "|");
     while (token != NULL && field < 9) {
-        str_trim(token);
-        
+        pangkas_string(token);
+
         switch (field) {
             case 0:  /* total_pemasukan */
-                data->total_pemasukan = safe_atoull(token);
+                data->total_pemasukan = aman_atoull(token);
                 break;
             case 1:  /* total_pengeluaran */
-                data->total_pengeluaran = safe_atoull(token);
+                data->total_pengeluaran = aman_atoull(token);
                 break;
             case 2:  /* rata_rata_pengeluaran */
-                data->rata_rata_pengeluaran = safe_atof(token);
+                data->rata_rata_pengeluaran = aman_atof(token);
                 break;
             case 3:  /* persentase_sisa */
-                data->persentase_sisa = safe_atof(token);
+                data->persentase_sisa = aman_atof(token);
                 break;
             case 4:  /* saldo_akhir */
-                data->saldo_akhir = safe_atoll(token);
+                data->saldo_akhir = aman_atoll(token);
                 break;
             case 5:  /* kondisi_keuangan */
-                data->kondisi_keuangan = safe_atoi(token);
+                data->kondisi_keuangan = aman_atoi(token);
                 break;
             case 6:  /* kesimpulan */
-                data->kesimpulan = safe_atoi(token);
+                data->kesimpulan = aman_atoi(token);
                 break;
             case 7:  /* total_trx_pengeluaran */
-                data->total_trx_pengeluaran = safe_atoi(token);
+                data->total_trx_pengeluaran = aman_atoi(token);
                 break;
             case 8:  /* total_trx_pemasukan */
-                data->total_trx_pemasukan = safe_atoi(token);
+                data->total_trx_pemasukan = aman_atoi(token);
                 break;
         }
-        
+
         field++;
         token = strtok(NULL, "|");
     }
-    
+
     return (field >= 9);
 }
 
 /**
  * Format struct Transaksi ke string pipe-delimited
- * I.S.: trx terdefinisi, result buffer
- * F.S.: result berisi string format file untuk transaksi
  */
-void format_transaksi(const Transaksi *trx, char *result, int result_size) {
-    if (trx == NULL || result == NULL || result_size <= 0) return; 
-    
+void format_transaksi_ke_string(const Transaksi *trx, char *result, int result_size) {
+    if (trx == NULL || result == NULL || result_size <= 0) return;
+
     snprintf(result, result_size, "%s|%s|%s|%s|%llu|%s",
             trx->id,
             trx->tanggal,
-            get_label_jenis(trx->jenis),
+            dapatkan_label_jenis(trx->jenis),
             trx->pos,
             trx->nominal,
             trx->deskripsi);
@@ -418,12 +407,10 @@ void format_transaksi(const Transaksi *trx, char *result, int result_size) {
 
 /**
  * Format struct PosAnggaran ke string pipe-delimited
- * I.S.: pos terdefinisi, result buffer
- * F.S.: result berisi string format file untuk pos anggaran
  */
-void format_pos(const PosAnggaran *pos, char *result, int result_size) {
-    if (pos == NULL || result == NULL || result_size <= 0) return; 
-    
+void format_pos_ke_string(const PosAnggaran *pos, char *result, int result_size) {
+    if (pos == NULL || result == NULL || result_size <= 0) return;
+
     snprintf(result, result_size, "%d|%s|%llu|%llu|%lld|%d|%d",
             pos->no,
             pos->nama,
@@ -436,12 +423,10 @@ void format_pos(const PosAnggaran *pos, char *result, int result_size) {
 
 /**
  * Format struct AnalisisKeuangan ke string pipe-delimited
- * I.S.: data terdefinisi, result buffer
- * F.S.: result berisi string format file untuk analisis
  */
-void format_analisis(const AnalisisKeuangan *data, char *result, int result_size) {
-    if (data == NULL || result == NULL || result_size <= 0) return; 
-    
+void format_analisis_ke_string(const AnalisisKeuangan *data, char *result, int result_size) {
+    if (data == NULL || result == NULL || result_size <= 0) return;
+
     snprintf(result, result_size, "%llu|%llu|%.2f|%.2f|%lld|%d|%d|%d|%d",
             data->total_pemasukan,
             data->total_pengeluaran,
@@ -454,174 +439,174 @@ void format_analisis(const AnalisisKeuangan *data, char *result, int result_size
             data->total_trx_pemasukan);
 }
 
-/* --- file_analisis.c --- */
+/* ===== IMPLEMENTASI FILE ANALISIS ===== */
 
-int load_analisis_bulan(int bulan, AnalisisKeuangan *result) {
+int muat_analisis_bulan(int bulan, AnalisisKeuangan *result) {
     if (!result || bulan < 1 || bulan > 12) return 0;
-    
-    ensure_data_directory();
+
+    pastikan_direktori_data();
     char filename[MAX_PATH];
-    get_filename_bulan(FILE_ANALISIS_PREFIX, bulan, filename, sizeof(filename));
-    
-    FILE *fp = file_open_read(filename);
+    dapatkan_nama_file_bulan(FILE_ANALISIS_PREFIX, bulan, filename, sizeof(filename));
+
+    FILE *fp = buka_file_baca(filename);
     if (!fp) return 0;
-    
+
     char line[512];
     int success = 0;
-    
+
     if (fgets(line, sizeof(line), fp)) {
-        str_remove_newline(line);
+        hapus_newline_string(line);
         if (strlen(line) > 0) {
-            success = parse_line_analisis(line, result);
+            success = urai_baris_analisis(line, result);
         }
     }
-    
+
     fclose(fp);
     return success;
 }
 
-int save_analisis_bulan(int bulan, AnalisisKeuangan *analisis) {
+int simpan_analisis_bulan(int bulan, AnalisisKeuangan *analisis) {
     if (!analisis || bulan < 1 || bulan > 12) return 0;
-    
-    ensure_data_directory();
+
+    pastikan_direktori_data();
     char filename[MAX_PATH];
-    get_filename_bulan(FILE_ANALISIS_PREFIX, bulan, filename, sizeof(filename));
-    
-    FILE *fp = file_open_write(filename);
+    dapatkan_nama_file_bulan(FILE_ANALISIS_PREFIX, bulan, filename, sizeof(filename));
+
+    FILE *fp = buka_file_tulis(filename);
     if (!fp) return 0;
-    
+
     char line[512];
-    format_analisis(analisis, line, sizeof(line));
+    format_analisis_ke_string(analisis, line, sizeof(line));
     fprintf(fp, "%s\n", line);
-    
+
     fclose(fp);
     return 1;
 }
 
-int analisis_file_exists(int bulan) {
+int cek_file_analisis_ada(int bulan) {
     if (bulan < 1 || bulan > 12) return 0;
-    
+
     char filename[MAX_PATH];
-    get_filename_bulan(FILE_ANALISIS_PREFIX, bulan, filename, sizeof(filename));
-    
-    return file_exists(filename);
+    dapatkan_nama_file_bulan(FILE_ANALISIS_PREFIX, bulan, filename, sizeof(filename));
+
+    return cek_file_ada(filename);
 }
 
-int init_analisis_bulan(int bulan) {
+int inisialisasi_analisis_bulan(int bulan) {
     if (bulan < 1 || bulan > 12) return 0;
-    
+
     /* Cek apakah sudah ada */
-    if (analisis_file_exists(bulan)) return 1;
-    
+    if (cek_file_analisis_ada(bulan)) return 1;
+
     /* Buat analisis kosong */
     AnalisisKeuangan analisis;
     memset(&analisis, 0, sizeof(AnalisisKeuangan));
     analisis.kondisi_keuangan = KONDISI_SEIMBANG;
     analisis.kesimpulan = KESIMPULAN_SEIMBANG;
-    
-    return save_analisis_bulan(bulan, &analisis);
+
+    return simpan_analisis_bulan(bulan, &analisis);
 }
 
-/* --- file_pos.c --- */
+/* ===== IMPLEMENTASI FILE POS ANGGARAN ===== */
 
-int load_pos_bulan(PosAnggaran *list, int max_count, int bulan) {
+int muat_pos_bulan(PosAnggaran *list, int max_count, int bulan) {
     if (!list || max_count <= 0 || bulan < 1 || bulan > 12) return 0;
-    
-    ensure_data_directory();
+
+    pastikan_direktori_data();
     char filename[MAX_PATH];
-    get_filename_bulan(FILE_POS_PREFIX, bulan, filename, sizeof(filename));
-    
-    FILE *fp = file_open_read(filename);
+    dapatkan_nama_file_bulan(FILE_POS_PREFIX, bulan, filename, sizeof(filename));
+
+    FILE *fp = buka_file_baca(filename);
     if (!fp) return 0;
-    
+
     char line[512];
     int count = 0;
-    
+
     while (fgets(line, sizeof(line), fp) && count < max_count) {
-        str_remove_newline(line);
+        hapus_newline_string(line);
         if (strlen(line) == 0) continue;
-        
-        if (parse_line_pos(line, &list[count])) {
+
+        if (urai_baris_pos(line, &list[count])) {
             count++;
         }
     }
-    
+
     fclose(fp);
     return count;
 }
 
-int save_pos_bulan(PosAnggaran *list, int count, int bulan) {
+int simpan_pos_bulan(PosAnggaran *list, int count, int bulan) {
     if (!list && count > 0) return 0;
     if (bulan < 1 || bulan > 12) return 0;
-    
-    ensure_data_directory();
+
+    pastikan_direktori_data();
     char filename[MAX_PATH];
-    get_filename_bulan(FILE_POS_PREFIX, bulan, filename, sizeof(filename));
-    
-    FILE *fp = file_open_write(filename);
+    dapatkan_nama_file_bulan(FILE_POS_PREFIX, bulan, filename, sizeof(filename));
+
+    FILE *fp = buka_file_tulis(filename);
     if (!fp) return 0;
-    
+
     char line[512];
     for (int i = 0; i < count; i++) {
-        format_pos(&list[i], line, sizeof(line));
+        format_pos_ke_string(&list[i], line, sizeof(line));
         fprintf(fp, "%s\n", line);
     }
-    
+
     fclose(fp);
     return 1;
 }
 
-int add_pos(PosAnggaran *pos, int bulan) {
+int tambah_pos_ke_file(PosAnggaran *pos, int bulan) {
     if (!pos || bulan < 1 || bulan > 12) return 0;
-    
+
     PosAnggaran list[MAX_POS];
-    int count = load_pos_bulan(list, MAX_POS, bulan);
-    
+    int count = muat_pos_bulan(list, MAX_POS, bulan);
+
     if (count >= MAX_POS) return 0;
-    
-    /* Set nomor pos */
+
+    /* Set nomor pos (auto-increment) */
     int max_no = 0;
     for (int i = 0; i < count; i++) {
         if (list[i].no > max_no) max_no = list[i].no;
     }
     pos->no = max_no + 1;
-    
+
     /* Inisialisasi nilai default */
     pos->realisasi = 0;
     pos->sisa = pos->nominal;
     pos->jumlah_transaksi = 0;
     pos->status = STATUS_AMAN;
-    
+
     list[count] = *pos;
     count++;
-    
-    return save_pos_bulan(list, count, bulan);
+
+    return simpan_pos_bulan(list, count, bulan);
 }
 
-int update_pos(int no, PosAnggaran *pos, int bulan) {
+int ubah_pos_di_file(int no, PosAnggaran *pos, int bulan) {
     if (!pos || no <= 0 || bulan < 1 || bulan > 12) return 0;
-    
+
     PosAnggaran list[MAX_POS];
-    int count = load_pos_bulan(list, MAX_POS, bulan);
-    
+    int count = muat_pos_bulan(list, MAX_POS, bulan);
+
     for (int i = 0; i < count; i++) {
         if (list[i].no == no) {
             /* Pertahankan nomor asli */
             pos->no = no;
             list[i] = *pos;
-            return save_pos_bulan(list, count, bulan);
+            return simpan_pos_bulan(list, count, bulan);
         }
     }
-    
+
     return 0;
 }
 
-int delete_pos(int no, int bulan) {
+int hapus_pos_dari_file(int no, int bulan) {
     if (no <= 0 || bulan < 1 || bulan > 12) return 0;
-    
+
     PosAnggaran list[MAX_POS];
-    int count = load_pos_bulan(list, MAX_POS, bulan);
-    
+    int count = muat_pos_bulan(list, MAX_POS, bulan);
+
     int found = -1;
     for (int i = 0; i < count; i++) {
         if (list[i].no == no) {
@@ -629,78 +614,78 @@ int delete_pos(int no, int bulan) {
             break;
         }
     }
-    
+
     if (found < 0) return 0;
-    
-    /* Shift array */
+
+    /* Shift array untuk menghapus elemen */
     for (int i = found; i < count - 1; i++) {
         list[i] = list[i + 1];
     }
-    
-    return save_pos_bulan(list, count - 1, bulan);
+
+    return simpan_pos_bulan(list, count - 1, bulan);
 }
 
-int find_pos_by_nama(const char *nama, int bulan, PosAnggaran *result) {
+int cari_pos_berdasarkan_nama(const char *nama, int bulan, PosAnggaran *result) {
     if (!nama || !result || bulan < 1 || bulan > 12) return 0;
-    
+
     PosAnggaran list[MAX_POS];
-    int count = load_pos_bulan(list, MAX_POS, bulan);
-    
+    int count = muat_pos_bulan(list, MAX_POS, bulan);
+
     for (int i = 0; i < count; i++) {
-        if (str_compare_nocase(list[i].nama, nama) == 0) {
+        if (banding_string_tanpa_case(list[i].nama, nama) == 0) {
             *result = list[i];
             return 1;
         }
     }
-    
+
     return 0;
 }
 
-int find_pos_by_no(int no, int bulan, PosAnggaran *result) {
+int cari_pos_berdasarkan_nomor(int no, int bulan, PosAnggaran *result) {
     if (no <= 0 || !result || bulan < 1 || bulan > 12) return 0;
-    
+
     PosAnggaran list[MAX_POS];
-    int count = load_pos_bulan(list, MAX_POS, bulan);
-    
+    int count = muat_pos_bulan(list, MAX_POS, bulan);
+
     for (int i = 0; i < count; i++) {
         if (list[i].no == no) {
             *result = list[i];
             return 1;
         }
     }
-    
+
     return 0;
 }
 
-int pos_file_exists(int bulan) {
+int cek_file_pos_ada(int bulan) {
     if (bulan < 1 || bulan > 12) return 0;
-    
+
     char filename[MAX_PATH];
-    get_filename_bulan(FILE_POS_PREFIX, bulan, filename, sizeof(filename));
-    
-    return file_exists(filename);
+    dapatkan_nama_file_bulan(FILE_POS_PREFIX, bulan, filename, sizeof(filename));
+
+    return cek_file_ada(filename);
 }
 
-int init_pos_bulan(int bulan) {
+int inisialisasi_pos_bulan(int bulan) {
     if (bulan < 1 || bulan > 12) return 0;
-    
+
     /* Cek apakah sudah ada */
-    if (pos_file_exists(bulan)) return 1;
-    
+    if (cek_file_pos_ada(bulan)) return 1;
+
     /* Buat file kosong */
-    return save_pos_bulan(NULL, 0, bulan);
+    return simpan_pos_bulan(NULL, 0, bulan);
 }
 
-int copy_pos_from_bulan(int bulan_tujuan, int bulan_sumber) {
+int salin_pos_dari_bulan(int bulan_tujuan, int bulan_sumber) {
     if (bulan_tujuan < 1 || bulan_tujuan > 12) return 0;
     if (bulan_sumber < 1 || bulan_sumber > 12) return 0;
     if (bulan_tujuan == bulan_sumber) return 0;
-    
+
     PosAnggaran list[MAX_POS];
-    int count = load_pos_bulan(list, MAX_POS, bulan_sumber);
-    
+    int count = muat_pos_bulan(list, MAX_POS, bulan_sumber);
+
     if (count == 0) return 0;
-    
+
     /* Reset realisasi dan sisa untuk bulan baru */
     for (int i = 0; i < count; i++) {
         list[i].realisasi = 0;
@@ -708,111 +693,112 @@ int copy_pos_from_bulan(int bulan_tujuan, int bulan_sumber) {
         list[i].jumlah_transaksi = 0;
         list[i].status = STATUS_AMAN;
     }
-    
-    return save_pos_bulan(list, count, bulan_tujuan);
+
+    return simpan_pos_bulan(list, count, bulan_tujuan);
 }
 
-/* --- file_transaksi.c --- */
+/* ===== IMPLEMENTASI FILE TRANSAKSI ===== */
 
-int load_transaksi(Transaksi *list, int max_count) {
+int muat_transaksi(Transaksi *list, int max_count) {
     if (!list || max_count <= 0) return 0;
-    
-    ensure_data_directory();
+
+    pastikan_direktori_data();
     char filename[MAX_PATH];
-    get_filename_transaksi(filename, sizeof(filename));
-    
-    FILE *fp = file_open_read(filename);
+    dapatkan_nama_file_transaksi(filename, sizeof(filename));
+
+    FILE *fp = buka_file_baca(filename);
     if (!fp) return 0;
-    
+
     char line[512];
     int count = 0;
-    
+
     while (fgets(line, sizeof(line), fp) && count < max_count) {
-        str_remove_newline(line);
+        hapus_newline_string(line);
         if (strlen(line) == 0) continue;
-        
-        if (parse_line_transaksi(line, &list[count])) {
+
+        if (urai_baris_transaksi(line, &list[count])) {
             count++;
         }
     }
-    
+
     fclose(fp);
     return count;
 }
 
-int load_transaksi_bulan(Transaksi *list, int max_count, int bulan) {
+int muat_transaksi_bulan(Transaksi *list, int max_count, int bulan) {
     if (!list || max_count <= 0 || bulan < 1 || bulan > 12) return 0;
-    
+
     Transaksi all[MAX_TRANSAKSI];
-    int total = load_transaksi(all, MAX_TRANSAKSI);
-    
+    int total = muat_transaksi(all, MAX_TRANSAKSI);
+
     int count = 0;
     for (int i = 0; i < total && count < max_count; i++) {
         Tanggal tgl;
-        if (parse_tanggal_struct(all[i].tanggal, &tgl) && tgl.bulan == bulan) {
+        /* Filter berdasarkan bulan */
+        if (urai_tanggal_struct(all[i].tanggal, &tgl) && tgl.bulan == bulan) {
             list[count++] = all[i];
         }
     }
-    
+
     return count;
 }
 
-int save_transaksi(Transaksi *list, int count) {
+int simpan_transaksi(Transaksi *list, int count) {
     if (!list && count > 0) return 0;
-    
-    ensure_data_directory();
+
+    pastikan_direktori_data();
     char filename[MAX_PATH];
-    get_filename_transaksi(filename, sizeof(filename));
-    
-    FILE *fp = file_open_write(filename);
+    dapatkan_nama_file_transaksi(filename, sizeof(filename));
+
+    FILE *fp = buka_file_tulis(filename);
     if (!fp) return 0;
-    
+
     char line[512];
     for (int i = 0; i < count; i++) {
-        format_transaksi(&list[i], line, sizeof(line));
+        format_transaksi_ke_string(&list[i], line, sizeof(line));
         fprintf(fp, "%s\n", line);
     }
-    
+
     fclose(fp);
     return 1;
 }
 
-int add_transaksi(Transaksi *trx) {
+int tambah_transaksi_ke_file(Transaksi *trx) {
     if (!trx) return 0;
-    
+
     Transaksi list[MAX_TRANSAKSI];
-    int count = load_transaksi(list, MAX_TRANSAKSI);
-    
+    int count = muat_transaksi(list, MAX_TRANSAKSI);
+
     if (count >= MAX_TRANSAKSI) return 0;
-    
+
     list[count] = *trx;
     count++;
-    
-    return save_transaksi(list, count);
+
+    return simpan_transaksi(list, count);
 }
 
-int update_transaksi(const char *id, Transaksi *trx) {
+int ubah_transaksi_di_file(const char *id, Transaksi *trx) {
     if (!id || !trx) return 0;
-    
+
     Transaksi list[MAX_TRANSAKSI];
-    int count = load_transaksi(list, MAX_TRANSAKSI);
-    
+    int count = muat_transaksi(list, MAX_TRANSAKSI);
+
     for (int i = 0; i < count; i++) {
         if (strcmp(list[i].id, id) == 0) {
             list[i] = *trx;
-            return save_transaksi(list, count);
+            return simpan_transaksi(list, count);
         }
     }
-    
+
     return 0;
 }
 
-int delete_transaksi(const char *id) {
+int hapus_transaksi_dari_file(const char *id) {
     if (!id) return 0;
-    
+
     Transaksi list[MAX_TRANSAKSI];
-    int count = load_transaksi(list, MAX_TRANSAKSI);
-    
+    int count = muat_transaksi(list, MAX_TRANSAKSI);
+
     int found = -1;
     for (int i = 0; i < count; i++) {
         if (strcmp(list[i].id, id) == 0) {
@@ -820,44 +806,42 @@ int delete_transaksi(const char *id) {
             break;
         }
     }
-    
+
     if (found < 0) return 0;
-    
+
     /* Shift array */
     for (int i = found; i < count - 1; i++) {
         list[i] = list[i + 1];
     }
-    
-    return save_transaksi(list, count - 1);
+
+    return simpan_transaksi(list, count - 1);
 }
 
-int find_transaksi_by_id(const char *id, Transaksi *result) {
+int cari_transaksi_berdasarkan_id(const char *id, Transaksi *result) {
     if (!id || !result) return 0;
-    
+
     Transaksi list[MAX_TRANSAKSI];
-    int count = load_transaksi(list, MAX_TRANSAKSI);
-    
+    int count = muat_transaksi(list, MAX_TRANSAKSI);
+
     for (int i = 0; i < count; i++) {
         if (strcmp(list[i].id, id) == 0) {
             *result = list[i];
             return 1;
         }
     }
-    
+
     return 0;
 }
 
 /**
- * Generate ID transaksi baru
- * I.S.: buffer terdefinisi
- * F.S.: buffer berisi ID unik baru (format Txxxx)
+ * Generate ID transaksi baru (format Txxxx)
  */
-void generate_transaksi_id(char *buffer) {
-    if (!buffer) return; 
-    
+void buat_id_transaksi(char *buffer) {
+    if (!buffer) return;
+
     Transaksi list[MAX_TRANSAKSI];
-    int count = load_transaksi(list, MAX_TRANSAKSI);
-    
+    int count = muat_transaksi(list, MAX_TRANSAKSI);
+
     int max_num = 0;
     for (int i = 0; i < count; i++) {
         if (list[i].id[0] == 'T' && strlen(list[i].id) == 5) {
@@ -865,22 +849,22 @@ void generate_transaksi_id(char *buffer) {
             if (num > max_num) max_num = num;
         }
     }
-    
+
     sprintf(buffer, "T%04d", max_num + 1);
 }
 
-int count_transaksi_by_pos(const char *nama_pos) {
+int hitung_transaksi_berdasarkan_pos(const char *nama_pos) {
     if (!nama_pos) return 0;
-    
+
     Transaksi list[MAX_TRANSAKSI];
-    int count = load_transaksi(list, MAX_TRANSAKSI);
-    
+    int count = muat_transaksi(list, MAX_TRANSAKSI);
+
     int hasil = 0;
     for (int i = 0; i < count; i++) {
-        if (str_compare_nocase(list[i].pos, nama_pos) == 0) {
+        if (banding_string_tanpa_case(list[i].pos, nama_pos) == 0) {
             hasil++;
         }
     }
-    
+
     return hasil;
 }
