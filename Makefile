@@ -1,7 +1,7 @@
-# ============================================================
+# ============================================================ 
 # Makefile - Aplikasi Keuangan Mahasiswa
 # Kelompok B11 - Dasar Pemrograman 2025
-# ============================================================
+# ============================================================ 
 
 # Compiler dan flags
 CC = gcc
@@ -17,25 +17,17 @@ INCLUDE_DIR = include
 TARGET = keuangan
 
 # Cari semua source files
-SRCS = $(wildcard $(SRC_DIR)/*.c) \
-       $(wildcard $(SRC_DIR)/utils/*.c) \
-       $(wildcard $(SRC_DIR)/validator/*.c) \
-       $(wildcard $(SRC_DIR)/file/*.c) \
-       $(wildcard $(SRC_DIR)/tui/*.c) \
-       $(wildcard $(SRC_DIR)/pos/*.c) \
-       $(wildcard $(SRC_DIR)/transaksi/*.c) \
-       $(wildcard $(SRC_DIR)/analisis/*.c)
+SRCS = $(wildcard $(SRC_DIR)/*.c)
 
 # Generate object files dari source files
 OBJS = $(patsubst $(SRC_DIR)/%.c,$(BUILD_DIR)/%.o,$(SRCS))
 
 # Semua header files untuk dependency
-HEADERS = $(wildcard $(INCLUDE_DIR)/*.h) \
-          $(wildcard $(INCLUDE_DIR)/*/*.h)
+HEADERS = $(wildcard $(INCLUDE_DIR)/*.h)
 
-# ============================================================
+# ============================================================ 
 # Targets
-# ============================================================
+# ============================================================ 
 
 # Default target
 all: dirs $(TARGET)
@@ -43,13 +35,6 @@ all: dirs $(TARGET)
 # Buat direktori yang diperlukan
 dirs:
 	@mkdir -p $(BUILD_DIR)
-	@mkdir -p $(BUILD_DIR)/utils
-	@mkdir -p $(BUILD_DIR)/validator
-	@mkdir -p $(BUILD_DIR)/file
-	@mkdir -p $(BUILD_DIR)/tui
-	@mkdir -p $(BUILD_DIR)/pos
-	@mkdir -p $(BUILD_DIR)/transaksi
-	@mkdir -p $(BUILD_DIR)/analisis
 	@mkdir -p data
 
 # Link semua object files menjadi executable
@@ -63,9 +48,9 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c $(HEADERS)
 	@echo "Compiling $<..."
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# ============================================================
+# ============================================================ 
 # Utility targets
-# ============================================================
+# ============================================================ 
 
 # Clean build files
 clean:
@@ -95,9 +80,9 @@ debug: clean all
 release: CFLAGS += -O2 -DNDEBUG
 release: clean all
 
-# ============================================================
+# ============================================================ 
 # Development targets
-# ============================================================
+# ============================================================ 
 
 # Compile check tanpa linking
 check:
@@ -138,7 +123,7 @@ info:
 # Help
 help: info
 
-# ============================================================
+# ============================================================ 
 # Phony targets
-# ============================================================
+# ============================================================ 
 .PHONY: all dirs clean cleanall rebuild run debug release check info help

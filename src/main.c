@@ -22,8 +22,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <locale.h>
-#include "../include/app_menu.h"
-#include "../include/file/file_core.h"
+#include "app_menu.h"
+#include "file.h"
 
 /**
  * @brief Main function - entry point aplikasi

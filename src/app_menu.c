@@ -5,18 +5,13 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "../include/app_menu.h"
-#include "../include/tui/tui_core.h"
-#include "../include/tui/tui_color.h"
-#include "../include/tui/tui_menu.h"
-#include "../include/tui/tui_message.h"
-#include "../include/pos/pos_handler.h"
-#include "../include/pos/pos_menu.h"
-#include "../include/transaksi/transaksi_handler.h"
-#include "../include/analisis/analisis_handler.h"
-#include "../include/utils/utils_date.h"
-#include "../include/utils/utils_bulan.h"
-#include "../include/constants.h"
+#include "app_menu.h"
+#include "tui.h"
+#include "pos.h"
+#include "transaksi.h"
+#include "analisis.h"
+#include "utils.h"
+#include "constants.h"
 
 /* Menu actions */
 #define ACT_TRANSAKSI   1
