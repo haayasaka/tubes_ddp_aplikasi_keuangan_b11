@@ -13,10 +13,21 @@
 #include "tui.h"
 #include "utils.h"
 #include "validator.h"
-#include "constants.h"
+
+/* Menu actions */
+#define ACT_VIEW    1
+#define ACT_TAMBAH  2
+#define ACT_EDIT    3
+#define ACT_HAPUS   4
+#define ACT_KEMBALI 0
 
 /* --- transaksi_crud.c --- */
 
+/**
+ * Helper untuk set error message
+ * I.S.: error_msg buffer, msg pesan
+ * F.S.: error_msg diisi msg
+ */
 static void set_error(char *error_msg, const char *msg) {
     if (error_msg && msg) {
         str_copy_safe(error_msg, msg, 100);
@@ -384,11 +395,16 @@ int tampilkan_form_tambah_transaksi(int bulan) {
     }
     y++;
     
-    /* Pilih pos */
-    tui_print(y++, 2, "Pilih Pos Anggaran:");
-    if (!tampilkan_pilih_pos(bulan, pos)) {
-        show_warning("Pos anggaran harus dipilih");
-        return 0;
+    /* Pilih pos (otomatis untuk Pemasukan) */
+    if (jenis == JENIS_PENGELUARAN) {
+        tui_print(y++, 2, "Pilih Pos Anggaran:");
+        if (!tampilkan_pilih_pos(bulan, pos)) {
+            show_warning("Pos anggaran harus dipilih");
+            return 0;
+        }
+    } else {
+        /* Untuk pemasukan, pos otomatis "Pemasukan" */
+        strcpy(pos, "Pemasukan");
     }
     
     /* Kembali ke form */
@@ -397,7 +413,11 @@ int tampilkan_form_tambah_transaksi(int bulan) {
     y = 5;
     tui_printf(y++, 2, "Tanggal : %s", tanggal);
     tui_printf(y++, 2, "Jenis   : %s", get_label_jenis(jenis));
-    tui_printf(y++, 2, "Pos     : %s", pos);
+    if (jenis == JENIS_PENGELUARAN) {
+        tui_printf(y++, 2, "Pos     : %s", pos);
+    } else {
+        tui_printf(y++, 2, "Pos     : %s (Otomatis)", pos);
+    }
     y++;
     
     /* Input nominal */
@@ -564,12 +584,11 @@ int tampilkan_konfirmasi_hapus_transaksi(const char *id) {
 
 /* --- transaksi_handler.c --- */
 
-#define ACT_VIEW    1
-#define ACT_TAMBAH  2
-#define ACT_EDIT    3
-#define ACT_HAPUS   4
-#define ACT_KEMBALI 0
-
+/**
+ * Jalankan modul transaksi
+ * I.S.: bulan_awal valid
+ * F.S.: modul transaksi dijalankan hingga user kembali
+ */
 void run_transaksi_module(int bulan_awal) {
     int bulan = bulan_awal;
     
@@ -605,12 +624,6 @@ void run_transaksi_module(int bulan_awal) {
 
 /* --- transaksi_menu.c --- */
 
-#define ACT_VIEW    1
-#define ACT_TAMBAH  2
-#define ACT_EDIT    3
-#define ACT_HAPUS   4
-#define ACT_KEMBALI 0
-
 int menu_transaksi_utama(int bulan) {
     char title[64];
     snprintf(title, sizeof(title), "Menu Transaksi - %s", get_nama_bulan(bulan));
@@ -627,6 +640,11 @@ int menu_transaksi_utama(int bulan) {
     return menu_navigate(&menu);
 }
 
+/**
+ * Handler untuk view daftar transaksi
+ * I.S.: bulan valid
+ * F.S.: user kembali dari view
+ */
 void handler_view_transaksi(int bulan) {
     int selected = 0;
     Transaksi list[MAX_TRANSAKSI];
@@ -678,10 +696,20 @@ void handler_view_transaksi(int bulan) {
     }
 }
 
+/**
+ * Handler untuk tambah transaksi
+ * I.S.: bulan valid
+ * F.S.: transaksi baru ditambahkan jika user konfirmasi
+ */
 void handler_tambah_transaksi(int bulan) {
     tampilkan_form_tambah_transaksi(bulan);
 }
 
+/**
+ * Handler untuk edit transaksi
+ * I.S.: bulan valid
+ * F.S.: transaksi diedit jika user konfirmasi
+ */
 void handler_edit_transaksi(int bulan) {
     Transaksi list[MAX_TRANSAKSI];
     int count = transaksi_get_list(list, MAX_TRANSAKSI, bulan);
@@ -714,6 +742,11 @@ void handler_edit_transaksi(int bulan) {
     tampilkan_form_edit_transaksi(list[pilihan].id);
 }
 
+/**
+ * Handler untuk hapus transaksi
+ * I.S.: bulan valid
+ * F.S.: transaksi dihapus jika user konfirmasi
+ */
 void handler_hapus_transaksi(int bulan) {
     Transaksi list[MAX_TRANSAKSI];
     int count = transaksi_get_list(list, MAX_TRANSAKSI, bulan);

@@ -12,7 +12,14 @@
 #include "tui.h"
 #include "utils.h"
 #include "validator.h"
-#include "constants.h"
+
+/* Menu actions */
+#define ACT_VIEW    1
+#define ACT_TAMBAH  2
+#define ACT_EDIT    3
+#define ACT_HAPUS   4
+#define ACT_BULAN   5
+#define ACT_KEMBALI 0
 
 /* --- pos_calc.c --- */
 
@@ -42,6 +49,11 @@ int tentukan_status_pos(long long sisa) {
     return (sisa >= 0) ? STATUS_AMAN : STATUS_TIDAK_AMAN;
 }
 
+/**
+ * Update kalkulasi untuk satu pos
+ * I.S.: pos terdefinisi
+ * F.S.: field realisasi, sisa, status, jumlah_transaksi pada pos diupdate
+ */
 void update_kalkulasi_pos(PosAnggaran *pos, int bulan) {
     if (!pos || bulan < 1 || bulan > 12) return; 
     
@@ -126,6 +138,11 @@ unsigned long long hitung_total_realisasi(int bulan) {
 
 /* --- pos_crud.c --- */
 
+/**
+ * Helper untuk set error message
+ * I.S.: error_msg buffer, msg pesan
+ * F.S.: error_msg diisi msg
+ */
 static void set_error(char *error_msg, const char *msg) {
     if (error_msg && msg) {
         str_copy_safe(error_msg, msg, 100);
@@ -598,14 +615,11 @@ int tampilkan_pilih_pos(int bulan, char *result) {
 
 /* --- pos_handler.c --- */
 
-/* Menu actions (sama dengan pos_menu.c) */
-#define ACT_VIEW    1
-#define ACT_TAMBAH  2
-#define ACT_EDIT    3
-#define ACT_HAPUS   4
-#define ACT_BULAN   5
-#define ACT_KEMBALI 0
-
+/**
+ * Jalankan modul pos anggaran
+ * I.S.: bulan_awal valid
+ * F.S.: modul pos dijalankan hingga user kembali
+ */
 void run_pos_module(int bulan_awal) {
     int bulan = bulan_awal;
 
@@ -683,14 +697,6 @@ int sync_pos_transaksi(int bulan) {
 
 /* --- pos_menu.c --- */
 
-/* Menu actions */
-#define ACT_VIEW    1
-#define ACT_TAMBAH  2
-#define ACT_EDIT    3
-#define ACT_HAPUS   4
-#define ACT_BULAN   5
-#define ACT_KEMBALI 0
-
 int menu_pos_utama(int bulan) {
     char title[64];
     snprintf(title, sizeof(title), "Menu Pos Anggaran - %s", get_nama_bulan(bulan));
@@ -730,6 +736,11 @@ int menu_pilih_bulan(int bulan_saat_ini) {
     return pilihan;
 }
 
+/**
+ * Handler untuk view daftar pos dengan navigasi
+ * I.S.: bulan valid
+ * F.S.: user kembali dari view
+ */
 void handler_view_pos(int bulan) {
     int selected = 0;
     PosAnggaran list[MAX_POS];
@@ -782,10 +793,20 @@ void handler_view_pos(int bulan) {
     }
 }
 
+/**
+ * Handler untuk tambah pos baru
+ * I.S.: bulan valid
+ * F.S.: pos baru ditambahkan jika user konfirmasi
+ */
 void handler_tambah_pos(int bulan) {
     tampilkan_form_tambah_pos(bulan);
 }
 
+/**
+ * Handler untuk edit pos
+ * I.S.: bulan valid
+ * F.S.: pos diedit jika user konfirmasi
+ */
 void handler_edit_pos(int bulan) {
     PosAnggaran list[MAX_POS];
     int count = pos_get_list(list, MAX_POS, bulan);
@@ -814,6 +835,11 @@ void handler_edit_pos(int bulan) {
     tampilkan_form_edit_pos(pilihan, bulan);
 }
 
+/**
+ * Handler untuk hapus pos
+ * I.S.: bulan valid
+ * F.S.: pos dihapus jika user konfirmasi
+ */
 void handler_hapus_pos(int bulan) {
     PosAnggaran list[MAX_POS];
     int count = pos_get_list(list, MAX_POS, bulan);

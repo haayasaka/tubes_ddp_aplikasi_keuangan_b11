@@ -13,7 +13,6 @@
 #include "tui.h"
 #include "pos.h"
 #include "utils.h"
-#include "constants.h"
 
 /* --- analisis_calc.c --- */
 
@@ -143,6 +142,11 @@ int refresh_analisis_bulan(int bulan) {
 static void tampilkan_transaksi_filter(int filter_jenis);
 static int display_laporan_keuangan(int bulan, AnalisisKeuangan *analisis);
 
+/**
+ * Tampilkan analisis keuangan lengkap untuk bulan
+ * I.S.: bulan valid
+ * F.S.: analisis ditampilkan di layar
+ */
 void tampilkan_analisis_bulan(int bulan) {
     AnalisisKeuangan analisis;
 
@@ -587,6 +591,11 @@ int menu_analisis_utama(int bulan) {
     return menu_navigate(&menu);
 }
 
+/**
+ * Jalankan modul analisis keuangan
+ * I.S.: bulan_awal valid
+ * F.S.: modul analisis dijalankan hingga user kembali
+ */
 void run_analisis_module(int bulan_awal) {
     int bulan = bulan_awal;
 

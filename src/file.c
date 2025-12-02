@@ -14,7 +14,6 @@
 #include <errno.h>
 #include "file.h"
 #include "utils.h"
-#include "constants.h"
 
 /* --- file_core.c --- */
 
@@ -75,9 +74,11 @@ FILE* file_open_append(const char *filename) {
 
 /**
  * Generate nama file dengan suffix bulan
+ * I.S.: base string, bulan integer, result buffer
+ * F.S.: result berisi path file lengkap
  */
 void get_filename_bulan(const char *base, int bulan, char *result, int result_size) {
-    if (base == NULL || result == NULL || result_size <= 0) return;
+    if (base == NULL || result == NULL || result_size <= 0) return; 
     
     /* Validasi bulan */
     if (bulan < BULAN_MIN || bulan > BULAN_MAX) {
@@ -90,9 +91,11 @@ void get_filename_bulan(const char *base, int bulan, char *result, int result_si
 
 /**
  * Generate nama file transaksi
+ * I.S.: result buffer
+ * F.S.: result berisi path file transaksi
  */
 void get_filename_transaksi(char *result, int result_size) {
-    if (result == NULL || result_size <= 0) return;
+    if (result == NULL || result_size <= 0) return; 
     
     snprintf(result, result_size, "%s%s%s", DATA_DIR, FILE_TRANSAKSI, FILE_EXTENSION);
 }
@@ -398,9 +401,11 @@ int parse_line_analisis(const char *line, AnalisisKeuangan *data) {
 
 /**
  * Format struct Transaksi ke string pipe-delimited
+ * I.S.: trx terdefinisi, result buffer
+ * F.S.: result berisi string format file untuk transaksi
  */
 void format_transaksi(const Transaksi *trx, char *result, int result_size) {
-    if (trx == NULL || result == NULL || result_size <= 0) return;
+    if (trx == NULL || result == NULL || result_size <= 0) return; 
     
     snprintf(result, result_size, "%s|%s|%s|%s|%llu|%s",
             trx->id,
@@ -413,9 +418,11 @@ void format_transaksi(const Transaksi *trx, char *result, int result_size) {
 
 /**
  * Format struct PosAnggaran ke string pipe-delimited
+ * I.S.: pos terdefinisi, result buffer
+ * F.S.: result berisi string format file untuk pos anggaran
  */
 void format_pos(const PosAnggaran *pos, char *result, int result_size) {
-    if (pos == NULL || result == NULL || result_size <= 0) return;
+    if (pos == NULL || result == NULL || result_size <= 0) return; 
     
     snprintf(result, result_size, "%d|%s|%llu|%llu|%lld|%d|%d",
             pos->no,
@@ -429,9 +436,11 @@ void format_pos(const PosAnggaran *pos, char *result, int result_size) {
 
 /**
  * Format struct AnalisisKeuangan ke string pipe-delimited
+ * I.S.: data terdefinisi, result buffer
+ * F.S.: result berisi string format file untuk analisis
  */
 void format_analisis(const AnalisisKeuangan *data, char *result, int result_size) {
-    if (data == NULL || result == NULL || result_size <= 0) return;
+    if (data == NULL || result == NULL || result_size <= 0) return; 
     
     snprintf(result, result_size, "%llu|%llu|%.2f|%.2f|%lld|%d|%d|%d|%d",
             data->total_pemasukan,
@@ -838,8 +847,13 @@ int find_transaksi_by_id(const char *id, Transaksi *result) {
     return 0;
 }
 
+/**
+ * Generate ID transaksi baru
+ * I.S.: buffer terdefinisi
+ * F.S.: buffer berisi ID unik baru (format Txxxx)
+ */
 void generate_transaksi_id(char *buffer) {
-    if (!buffer) return;
+    if (!buffer) return; 
     
     Transaksi list[MAX_TRANSAKSI];
     int count = load_transaksi(list, MAX_TRANSAKSI);

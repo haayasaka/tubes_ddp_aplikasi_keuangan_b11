@@ -8,172 +8,193 @@
 #ifndef TRANSAKSI_H
 #define TRANSAKSI_H
 
-#include "types.h"
+/**
+ * @brief Struct untuk menyimpan data satu transaksi keuangan
+ * 
+ * Menyimpan informasi lengkap tentang transaksi baik pemasukan maupun pengeluaran
+ */
+typedef struct Transaksi {
+    char id[6];                 /* ID transaksi (T0001-T9999) */
+    char tanggal[11];           /* Format dd-mm-YYYY */
+    int jenis;                  /* 0=Pengeluaran, 1=Pemasukan */
+    char pos[21];               /* Nama pos anggaran (max 20 char) */
+    unsigned long long nominal; /* Nilai transaksi > 0 */
+    char deskripsi[51];         /* Keterangan (max 50 char) */
+} Transaksi;
+
+/**
+ * @brief Struct untuk array dinamis transaksi
+ * 
+ * Digunakan untuk mengelola koleksi transaksi dengan ukuran dinamis
+ */
+typedef struct ListTransaksi {
+    Transaksi *data;            /* Pointer ke array transaksi */
+    int count;                  /* Jumlah transaksi saat ini */
+    int capacity;               /* Kapasitas maksimal array */
+} ListTransaksi;
+
+/* ===== KONSTANTA TRANSAKSI ===== */
+#define MAX_DESKRIPSI_LENGTH    50      /* Panjang maksimal deskripsi */
+#define MAX_ID_LENGTH           5       /* Panjang ID transaksi (T0001) */
+#define MAX_TANGGAL_LENGTH      10      /* Format dd-mm-YYYY */
+#define MAX_TRANSAKSI           1000    /* Maksimal transaksi per bulan */
+#define FILE_TRANSAKSI          "transaksi"         /* Nama dasar file transaksi */
+#define FILE_TRANSAKSI_NAME     "transaksi.txt"     /* Nama file transaksi */
+
+/* ===== JENIS TRANSAKSI ===== */
+#define JENIS_PENGELUARAN       0       /* Kode untuk pengeluaran */
+#define JENIS_PEMASUKAN         1       /* Kode untuk pemasukan */
 
 /* --- transaksi_crud.h --- */
 
-/**
- * @brief Tambah transaksi baru dengan validasi
- * @param tanggal Tanggal transaksi (dd-mm-YYYY)
- * @param jenis Jenis transaksi (0=Pengeluaran, 1=Pemasukan)
- * @param pos Nama pos anggaran
- * @param nominal Nilai transaksi
- * @param deskripsi Keterangan transaksi
- * @param error_msg Buffer untuk pesan error (bisa NULL)
- * @return 1 jika berhasil, 0 jika gagal
- */
+/*
+    Function bertujuan untuk menambahkan transaksi baru dengan validasi.
+    Input : tanggal, jenis, pos, nominal, deskripsi
+    Output : error_msg (menyimpan pesan error via pointer). Mengembalikan 1 jika berhasil, 0 jika gagal.
+*/
 int transaksi_tambah(const char *tanggal, int jenis, const char *pos,
                      unsigned long long nominal, const char *deskripsi,
                      char *error_msg);
 
-/**
- * @brief Edit transaksi dengan validasi
- * @param id ID transaksi yang diedit
- * @param tanggal Tanggal baru (NULL jika tidak diubah)
- * @param jenis Jenis baru (-1 jika tidak diubah)
- * @param pos Pos baru (NULL jika tidak diubah)
- * @param nominal Nominal baru (0 jika tidak diubah)
- * @param deskripsi Deskripsi baru (NULL jika tidak diubah)
- * @param error_msg Buffer untuk pesan error
- * @return 1 jika berhasil, 0 jika gagal
- */
+/*
+    Function bertujuan untuk mengedit transaksi dengan validasi.
+    Input : id, tanggal, jenis, pos, nominal, deskripsi
+    Output : error_msg (menyimpan pesan error via pointer). Mengembalikan 1 jika berhasil, 0 jika gagal.
+*/
 int transaksi_edit(const char *id, const char *tanggal, int jenis,
                    const char *pos, unsigned long long nominal,
                    const char *deskripsi, char *error_msg);
 
-/**
- * @brief Hapus transaksi dengan validasi
- * @param id ID transaksi yang dihapus
- * @param error_msg Buffer untuk pesan error
- * @return 1 jika berhasil, 0 jika gagal
- */
+/*
+    Function bertujuan untuk menghapus transaksi dengan validasi.
+    Input : id
+    Output : error_msg (menyimpan pesan error via pointer). Mengembalikan 1 jika berhasil, 0 jika gagal.
+*/
 int transaksi_hapus(const char *id, char *error_msg);
 
-/**
- * @brief Ambil daftar transaksi untuk bulan tertentu
- * @param list Array untuk menyimpan hasil
- * @param max_count Kapasitas maksimal
- * @param bulan Bulan (1-12), 0 untuk semua bulan
- * @return Jumlah transaksi
- */
+/*
+    Function bertujuan untuk mengambil daftar transaksi untuk bulan tertentu.
+    Input : max_count (kapasitas maksimal), bulan (1-12, 0 untuk semua)
+    Output : list (array menyimpan hasil). Mengembalikan jumlah transaksi.
+*/
 int transaksi_get_list(Transaksi *list, int max_count, int bulan);
 
-/**
- * @brief Ambil transaksi berdasarkan ID
- * @param id ID transaksi
- * @param result Pointer untuk menyimpan hasil
- * @return 1 jika ditemukan, 0 jika tidak
- */
+/*
+    Function bertujuan untuk mengambil transaksi berdasarkan ID.
+    Input : id (ID transaksi)
+    Output : result (pointer menyimpan hasil). Mengembalikan 1 jika ditemukan, 0 jika tidak.
+*/
 int transaksi_get_by_id(const char *id, Transaksi *result);
 
-/**
- * @brief Hitung total pemasukan untuk bulan tertentu
- * @param bulan Bulan (1-12)
- * @return Total pemasukan
- */
+/*
+    Function bertujuan untuk menghitung total pemasukan untuk bulan tertentu.
+    Input : bulan (1-12)
+    Output : Mengembalikan total pemasukan.
+*/
 unsigned long long transaksi_total_pemasukan(int bulan);
 
-/**
- * @brief Hitung total pengeluaran untuk bulan tertentu
- * @param bulan Bulan (1-12)
- * @return Total pengeluaran
- */
+/*
+    Function bertujuan untuk menghitung total pengeluaran untuk bulan tertentu.
+    Input : bulan (1-12)
+    Output : Mengembalikan total pengeluaran.
+*/
 unsigned long long transaksi_total_pengeluaran(int bulan);
 
-/**
- * @brief Hitung jumlah transaksi untuk bulan tertentu
- * @param bulan Bulan (1-12)
- * @param jenis Jenis transaksi (-1 untuk semua)
- * @return Jumlah transaksi
- */
+/*
+    Function bertujuan untuk menghitung jumlah transaksi untuk bulan tertentu.
+    Input : bulan (1-12), jenis (-1 untuk semua)
+    Output : Mengembalikan jumlah transaksi.
+*/
 int transaksi_count(int bulan, int jenis);
 
 /* --- transaksi_display.h --- */
 
-/**
- * @brief Tampilkan daftar transaksi bulan
- * @param bulan Bulan yang ditampilkan
- * @param selected Index transaksi terpilih (-1 jika tidak ada)
- * @return Baris berikutnya setelah tabel
- */
+/*
+    Function bertujuan untuk menampilkan daftar transaksi bulan.
+    Input : bulan, selected (index terpilih)
+    Output : Mengembalikan posisi baris berikutnya setelah tabel.
+*/
 int tampilkan_daftar_transaksi(int bulan, int selected);
 
-/**
- * @brief Tampilkan detail satu transaksi
- * @param trx Pointer ke transaksi
- * @param start_y Baris awal
- * @return Baris berikutnya setelah detail
- */
+/*
+    Function bertujuan untuk menampilkan detail satu transaksi.
+    Input : trx (pointer ke transaksi), start_y (baris awal)
+    Output : Mengembalikan posisi baris berikutnya setelah detail.
+*/
 int tampilkan_detail_transaksi(Transaksi *trx, int start_y);
 
-/**
- * @brief Tampilkan ringkasan transaksi bulan
- * @param bulan Bulan yang ditampilkan
- * @param start_y Baris awal
- * @return Baris berikutnya setelah ringkasan
- */
+/*
+    Function bertujuan untuk menampilkan ringkasan transaksi bulan.
+    Input : bulan, start_y (baris awal)
+    Output : Mengembalikan posisi baris berikutnya setelah ringkasan.
+*/
 int tampilkan_ringkasan_transaksi(int bulan, int start_y);
 
-/**
- * @brief Tampilkan form tambah transaksi
- * @param bulan Bulan default untuk transaksi
- * @return 1 jika berhasil tambah, 0 jika dibatalkan
- */
+/*
+    Function bertujuan untuk menampilkan form tambah transaksi.
+    Input : bulan (default)
+    Output : Mengembalikan 1 jika berhasil tambah, 0 jika dibatalkan.
+*/
 int tampilkan_form_tambah_transaksi(int bulan);
 
-/**
- * @brief Tampilkan form edit transaksi
- * @param id ID transaksi yang diedit
- * @return 1 jika berhasil edit, 0 jika dibatalkan
- */
+/*
+    Function bertujuan untuk menampilkan form edit transaksi.
+    Input : id (ID transaksi)
+    Output : Mengembalikan 1 jika berhasil edit, 0 jika dibatalkan.
+*/
 int tampilkan_form_edit_transaksi(const char *id);
 
-/**
- * @brief Tampilkan konfirmasi hapus transaksi
- * @param id ID transaksi yang akan dihapus
- * @return 1 jika berhasil hapus, 0 jika dibatalkan
- */
+/*
+    Function bertujuan untuk menampilkan konfirmasi hapus transaksi.
+    Input : id (ID transaksi)
+    Output : Mengembalikan 1 jika berhasil hapus, 0 jika dibatalkan.
+*/
 int tampilkan_konfirmasi_hapus_transaksi(const char *id);
 
 /* --- transaksi_handler.h --- */
 
-/**
- * @brief Jalankan modul transaksi
- * @param bulan_awal Bulan awal yang ditampilkan
- */
+/*
+    Procedure bertujuan untuk menjalankan modul transaksi.
+    I. S. : bulan_awal valid
+    F. S. : Modul transaksi dijalankan hingga user kembali.
+*/
 void run_transaksi_module(int bulan_awal);
 
 /* --- transaksi_menu.h --- */
 
-/**
- * @brief Tampilkan menu utama transaksi
- * @param bulan Bulan yang aktif
- * @return Kode aksi yang dipilih
- */
+/*
+    Function bertujuan untuk menampilkan menu utama transaksi.
+    Input : bulan (aktif)
+    Output : Mengembalikan kode aksi yang dipilih.
+*/
 int menu_transaksi_utama(int bulan);
 
-/**
- * @brief Handler untuk view daftar transaksi
- * @param bulan Bulan yang ditampilkan
- */
+/*
+    Procedure bertujuan untuk menangani view daftar transaksi.
+    I. S. : bulan valid
+    F. S. : User kembali dari view.
+*/
 void handler_view_transaksi(int bulan);
 
-/**
- * @brief Handler untuk tambah transaksi
- * @param bulan Bulan untuk transaksi baru
- */
+/*
+    Procedure bertujuan untuk menangani tambah transaksi.
+    I. S. : bulan valid
+    F. S. : Transaksi baru ditambahkan jika user konfirmasi.
+*/
 void handler_tambah_transaksi(int bulan);
 
-/**
- * @brief Handler untuk edit transaksi
- * @param bulan Bulan transaksi
- */
+/*
+    Procedure bertujuan untuk menangani edit transaksi.
+    I. S. : bulan valid
+    F. S. : Transaksi diedit jika user konfirmasi.
+*/
 void handler_edit_transaksi(int bulan);
 
-/**
- * @brief Handler untuk hapus transaksi
- * @param bulan Bulan transaksi
- */
+/*
+    Procedure bertujuan untuk menangani hapus transaksi.
+    I. S. : bulan valid
+    F. S. : Transaksi dihapus jika user konfirmasi.
+*/
 void handler_hapus_transaksi(int bulan);
 
 #endif /* TRANSAKSI_H */

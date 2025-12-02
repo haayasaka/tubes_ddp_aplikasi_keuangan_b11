@@ -15,7 +15,6 @@
 #include "utils.h"
 #include "validator.h"
 #include "file.h"
-#include "constants.h"
 
 /* --- tui_color.c --- */
 

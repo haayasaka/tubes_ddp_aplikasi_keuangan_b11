@@ -8,352 +8,350 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include "types.h"
+/* ===== KODE RETURN ===== */
+#define SUCCESS                 1       /* Operasi berhasil */
+#define FAILURE                 0       /* Operasi gagal */
+#define CANCEL                  -1      /* Operasi dibatalkan user */
+
+/* ===== BULAN ===== */
+#define BULAN_MIN               1       /* Januari */
+#define BULAN_MAX               12      /* Desember */
+
+/**
+ * @brief Struct untuk menyimpan komponen tanggal
+ * 
+ * Digunakan untuk parsing dan manipulasi tanggal
+ */
+typedef struct {
+    int hari;                   /* Hari (1-31) */
+    int bulan;                  /* Bulan (1-12) */
+    int tahun;                  /* Tahun (4 digit) */
+} Tanggal;
+
+// Forward declarations for types used in alloc functions
+// The actual definitions are in their respective headers
+typedef struct Transaksi Transaksi;
+typedef struct PosAnggaran PosAnggaran;
+typedef struct AnalisisKeuangan AnalisisKeuangan;
+typedef struct ListTransaksi ListTransaksi;
+typedef struct ListPos ListPos;
 
 /* --- utils_array.h --- */
 
-/**
- * @brief Mengalokasikan array Transaksi
- * @param size Jumlah elemen yang akan dialokasikan
- * @return Pointer ke array Transaksi, atau NULL jika gagal
- * 
- * Caller bertanggung jawab untuk membebaskan memory dengan free_transaksi_array()
- */
+/*
+    Function bertujuan untuk mengalokasikan array Transaksi secara dinamis.
+    Input : size (jumlah elemen yang akan dialokasikan)
+    Output : Mengembalikan pointer ke array Transaksi yang dialokasikan, atau NULL jika gagal.
+*/
 Transaksi* alloc_transaksi_array(int size);
 
-/**
- * @brief Mengalokasikan array PosAnggaran
- * @param size Jumlah elemen yang akan dialokasikan
- * @return Pointer ke array PosAnggaran, atau NULL jika gagal
- * 
- * Caller bertanggung jawab untuk membebaskan memory dengan free_pos_array()
- */
+/*
+    Function bertujuan untuk mengalokasikan array PosAnggaran secara dinamis.
+    Input : size (jumlah elemen yang akan dialokasikan)
+    Output : Mengembalikan pointer ke array PosAnggaran yang dialokasikan, atau NULL jika gagal.
+*/
 PosAnggaran* alloc_pos_array(int size);
 
-/**
- * @brief Membebaskan memory array Transaksi
- * @param arr Pointer ke array yang akan dibebaskan
- */
+/*
+    Procedure bertujuan untuk membebaskan memory array Transaksi.
+    I. S. : arr (pointer ke array yang akan dibebaskan, bisa NULL)
+    F. S. : Memory yang ditunjuk arr dibebaskan.
+*/
 void free_transaksi_array(Transaksi *arr);
 
-/**
- * @brief Membebaskan memory array PosAnggaran
- * @param arr Pointer ke array yang akan dibebaskan
- */
+/*
+    Procedure bertujuan untuk membebaskan memory array PosAnggaran.
+    I. S. : arr (pointer ke array yang akan dibebaskan, bisa NULL)
+    F. S. : Memory yang ditunjuk arr dibebaskan.
+*/
 void free_pos_array(PosAnggaran *arr);
 
-/**
- * @brief Menginisialisasi struct ListTransaksi
- * @param list Pointer ke ListTransaksi yang akan diinisialisasi
- * @param initial_capacity Kapasitas awal
- * @return 1 jika berhasil, 0 jika gagal
- */
+/*
+    Function bertujuan untuk menginisialisasi struct ListTransaksi.
+    Input : list (pointer ke ListTransaksi), initial_capacity (kapasitas awal)
+    Output : Mengembalikan 1 jika berhasil, 0 jika gagal.
+*/
 int init_list_transaksi(ListTransaksi *list, int initial_capacity);
 
-/**
- * @brief Membebaskan memory ListTransaksi
- * @param list Pointer ke ListTransaksi yang akan dibebaskan
- */
+/*
+    Procedure bertujuan untuk membebaskan memory ListTransaksi.
+    I. S. : list (pointer ke ListTransaksi yang terdefinisi)
+    F. S. : Memory data list dibebaskan, count dan capacity di-reset ke 0.
+*/
 void free_list_transaksi(ListTransaksi *list);
 
-/**
- * @brief Menambahkan transaksi ke ListTransaksi
- * @param list Pointer ke ListTransaksi
- * @param trx Pointer ke Transaksi yang akan ditambahkan
- * @return 1 jika berhasil, 0 jika gagal
- * 
- * Fungsi ini akan memperbesar kapasitas jika diperlukan
- */
+/*
+    Function bertujuan untuk menambahkan transaksi ke ListTransaksi.
+    Input : list (pointer ke ListTransaksi), trx (pointer ke Transaksi yang ditambahkan)
+    Output : Mengembalikan 1 jika berhasil, 0 jika gagal.
+*/
 int add_to_list_transaksi(ListTransaksi *list, const Transaksi *trx);
 
-/**
- * @brief Menginisialisasi struct ListPos
- * @param list Pointer ke ListPos yang akan diinisialisasi
- * @param initial_capacity Kapasitas awal
- * @return 1 jika berhasil, 0 jika gagal
- */
+/*
+    Function bertujuan untuk menginisialisasi struct ListPos.
+    Input : list (pointer ke ListPos), initial_capacity (kapasitas awal)
+    Output : Mengembalikan 1 jika berhasil, 0 jika gagal.
+*/
 int init_list_pos(ListPos *list, int initial_capacity);
 
-/**
- * @brief Membebaskan memory ListPos
- * @param list Pointer ke ListPos yang akan dibebaskan
- */
+/*
+    Procedure bertujuan untuk membebaskan memory ListPos.
+    I. S. : list (pointer ke ListPos yang terdefinisi)
+    F. S. : Memory data list dibebaskan, count dan capacity di-reset ke 0.
+*/
 void free_list_pos(ListPos *list);
 
-/**
- * @brief Menambahkan pos anggaran ke ListPos
- * @param list Pointer ke ListPos
- * @param pos Pointer ke PosAnggaran yang akan ditambahkan
- * @return 1 jika berhasil, 0 jika gagal
- * 
- * Fungsi ini akan memperbesar kapasitas jika diperlukan
- */
+/*
+    Function bertujuan untuk menambahkan pos anggaran ke ListPos.
+    Input : list (pointer ke ListPos), pos (pointer ke PosAnggaran yang ditambahkan)
+    Output : Mengembalikan 1 jika berhasil, 0 jika gagal.
+*/
 int add_to_list_pos(ListPos *list, const PosAnggaran *pos);
 
-/**
- * @brief Menginisialisasi struct Transaksi ke nilai default
- * @param trx Pointer ke Transaksi yang akan diinisialisasi
- */
+/*
+    Procedure bertujuan untuk menginisialisasi struct Transaksi ke nilai default.
+    I. S. : trx (pointer ke Transaksi, bisa belum diinisialisasi)
+    F. S. : Field-field trx diisi dengan nilai default (0/kosong).
+*/
 void init_transaksi(Transaksi *trx);
 
-/**
- * @brief Menginisialisasi struct PosAnggaran ke nilai default
- * @param pos Pointer ke PosAnggaran yang akan diinisialisasi
- */
+/*
+    Procedure bertujuan untuk menginisialisasi struct PosAnggaran ke nilai default.
+    I. S. : pos (pointer ke PosAnggaran, bisa belum diinisialisasi)
+    F. S. : Field-field pos diisi dengan nilai default.
+*/
 void init_pos_anggaran(PosAnggaran *pos);
 
-/**
- * @brief Menginisialisasi struct AnalisisKeuangan ke nilai default
- * @param analisis Pointer ke AnalisisKeuangan yang akan diinisialisasi
- */
+/*
+    Procedure bertujuan untuk menginisialisasi struct AnalisisKeuangan ke nilai default.
+    I. S. : analisis (pointer ke AnalisisKeuangan, bisa belum diinisialisasi)
+    F. S. : Field-field analisis diisi dengan nilai default.
+*/
 void init_analisis_keuangan(AnalisisKeuangan *analisis);
 
 /* --- utils_bulan.h --- */
 
-/**
- * @brief Mendapatkan nama bulan dalam Bahasa Indonesia
- * @param bulan Nomor bulan (1-12)
- * @return Pointer ke string nama bulan (statis), atau "Invalid" jika di luar range
- * 
- * Contoh: get_nama_bulan(1) -> "Januari"
- */
+/*
+    Function bertujuan untuk mendapatkan nama bulan dalam Bahasa Indonesia.
+    Input : bulan (nomor bulan 1-12)
+    Output : Mengembalikan pointer ke string nama bulan (statis), atau "Invalid" jika di luar range.
+*/
 const char* get_nama_bulan(int bulan);
 
-/**
- * @brief Mendapatkan kode bulan 2 digit
- * @param bulan Nomor bulan (1-12)
- * @return Pointer ke string kode bulan (statis), atau "00" jika di luar range
- * 
- * Contoh: get_kode_bulan(1) -> "01", get_kode_bulan(12) -> "12"
- */
+/*
+    Function bertujuan untuk mendapatkan kode bulan 2 digit.
+    Input : bulan (nomor bulan 1-12)
+    Output : Mengembalikan pointer ke string kode bulan (statis), atau "00" jika di luar range.
+*/
 const char* get_kode_bulan(int bulan);
 
-/**
- * @brief Mendapatkan nama bulan singkat (3 huruf)
- * @param bulan Nomor bulan (1-12)
- * @return Pointer ke string nama bulan singkat (statis)
- * 
- * Contoh: get_nama_bulan_singkat(1) -> "Jan"
- */
+/*
+    Function bertujuan untuk mendapatkan nama bulan singkat (3 huruf).
+    Input : bulan (nomor bulan 1-12)
+    Output : Mengembalikan pointer ke string nama bulan singkat (statis).
+*/
 const char* get_nama_bulan_singkat(int bulan);
 
-/**
- * @brief Mengkonversi nama bulan ke nomor bulan
- * @param nama Nama bulan (case-insensitive)
- * @return Nomor bulan (1-12), atau 0 jika tidak valid
- * 
- * Contoh: nama_ke_nomor_bulan("januari") -> 1
- */
+/*
+    Function bertujuan untuk mengkonversi nama bulan ke nomor bulan.
+    Input : nama (nama bulan, case-insensitive)
+    Output : Mengembalikan nomor bulan (1-12), atau 0 jika tidak valid.
+*/
 int nama_ke_nomor_bulan(const char *nama);
 
-/**
- * @brief Validasi nomor bulan
- * @param bulan Nomor bulan yang akan divalidasi
- * @return 1 jika valid (1-12), 0 jika tidak valid
- */
+/*
+    Function bertujuan untuk memvalidasi nomor bulan.
+    Input : bulan (nomor bulan yang akan divalidasi)
+    Output : Mengembalikan 1 jika valid (1-12), 0 jika tidak valid.
+*/
 int is_valid_bulan(int bulan);
 
 /* --- utils_date.h --- */
 
-/**
- * @brief Parse string tanggal ke komponen hari, bulan, tahun
- * @param str String tanggal format dd-mm-YYYY
- * @param d Pointer untuk menyimpan hari
- * @param m Pointer untuk menyimpan bulan
- * @param y Pointer untuk menyimpan tahun
- * @return 1 jika berhasil parse, 0 jika format invalid
- */
+/*
+    Function bertujuan untuk mem-parse string tanggal ke komponen hari, bulan, tahun.
+    Input : str (string tanggal format dd-mm-YYYY)
+    Output : d (hari), m (bulan), y (tahun) diisi via pointer. Mengembalikan 1 jika berhasil, 0 jika gagal.
+*/
 int parse_tanggal(const char *str, int *d, int *m, int *y);
 
-/**
- * @brief Parse string tanggal ke struct Tanggal
- * @param str String tanggal format dd-mm-YYYY
- * @param tgl Pointer ke struct Tanggal untuk menyimpan hasil
- * @return 1 jika berhasil parse, 0 jika format invalid
- */
+/*
+    Function bertujuan untuk mem-parse string tanggal ke struct Tanggal.
+    Input : str (string tanggal format dd-mm-YYYY)
+    Output : tgl (struct Tanggal) diisi via pointer. Mengembalikan 1 jika berhasil, 0 jika gagal.
+*/
 int parse_tanggal_struct(const char *str, Tanggal *tgl);
 
-/**
- * @brief Format komponen tanggal ke string dd-mm-YYYY
- * @param d Hari (1-31)
- * @param m Bulan (1-12)
- * @param y Tahun (misal 2025)
- * @param result Buffer untuk menyimpan hasil (minimal 11 karakter)
- */
+/*
+    Procedure bertujuan untuk memformat komponen tanggal ke string dd-mm-YYYY.
+    Input : d (hari), m (bulan), y (tahun)
+    Output : result (string tanggal terformat "dd-mm-YYYY")
+*/
 void format_tanggal(int d, int m, int y, char *result);
 
-/**
- * @brief Mendapatkan bulan saat ini dari sistem
- * @return Bulan saat ini (1-12)
- */
+/*
+    Function bertujuan untuk mendapatkan bulan saat ini dari sistem.
+    Input : -
+    Output : Mengembalikan bulan saat ini (1-12).
+*/
 int get_current_month(void);
 
-/**
- * @brief Mendapatkan tahun saat ini dari sistem
- * @return Tahun saat ini
- */
+/*
+    Function bertujuan untuk mendapatkan tahun saat ini dari sistem.
+    Input : -
+    Output : Mengembalikan tahun saat ini.
+*/
 int get_current_year(void);
 
-/**
- * @brief Mendapatkan hari saat ini dari sistem
- * @return Hari saat ini (1-31)
- */
+/*
+    Function bertujuan untuk mendapatkan hari saat ini dari sistem.
+    Input : -
+    Output : Mengembalikan hari saat ini (1-31).
+*/
 int get_current_day(void);
 
-/**
- * @brief Memeriksa apakah tahun adalah tahun kabisat
- * @param year Tahun yang akan diperiksa
- * @return 1 jika tahun kabisat, 0 jika bukan
- */
+/*
+    Function bertujuan untuk memeriksa apakah tahun adalah tahun kabisat.
+    Input : year (tahun yang akan diperiksa)
+    Output : Mengembalikan 1 jika tahun kabisat, 0 jika bukan.
+*/
 int is_leap_year(int year);
 
-/**
- * @brief Mendapatkan jumlah hari dalam bulan tertentu
- * @param month Bulan (1-12)
- * @param year Tahun (untuk pengecekan kabisat)
- * @return Jumlah hari dalam bulan
- */
+/*
+    Function bertujuan untuk mendapatkan jumlah hari dalam bulan tertentu.
+    Input : month (bulan 1-12), year (tahun untuk pengecekan kabisat)
+    Output : Mengembalikan jumlah hari dalam bulan.
+*/
 int get_days_in_month(int month, int year);
 
-/**
- * @brief Mengekstrak bulan dari string tanggal
- * @param tanggal String tanggal format dd-mm-YYYY
- * @return Nomor bulan (1-12), atau 0 jika gagal
- */
+/*
+    Function bertujuan untuk mengekstrak bulan dari string tanggal.
+    Input : tanggal (string tanggal format dd-mm-YYYY)
+    Output : Mengembalikan nomor bulan (1-12), atau 0 jika gagal.
+*/
 int ekstrak_bulan(const char *tanggal);
 
-/**
- * @brief Mengekstrak tahun dari string tanggal
- * @param tanggal String tanggal format dd-mm-YYYY
- * @return Tahun, atau 0 jika gagal
- */
+/*
+    Function bertujuan untuk mengekstrak tahun dari string tanggal.
+    Input : tanggal (string tanggal format dd-mm-YYYY)
+    Output : Mengembalikan tahun, atau 0 jika gagal.
+*/
 int ekstrak_tahun(const char *tanggal);
 
-/**
- * @brief Mendapatkan tanggal hari ini dalam format dd-mm-YYYY
- * @param result Buffer untuk menyimpan hasil (minimal 11 karakter)
- */
+/*
+    Procedure bertujuan untuk mendapatkan tanggal hari ini dalam format dd-mm-YYYY.
+    Input : -
+    Output : result (string tanggal hari ini "dd-mm-YYYY")
+*/
 void get_today_string(char *result);
 
 /* --- utils_number.h --- */
 
-/**
- * @brief Memformat nominal ke format Rupiah dengan separator ribuan
- * @param nominal Nilai nominal yang akan diformat
- * @param result Buffer untuk menyimpan hasil (minimal 30 karakter)
- * 
- * Contoh: 1000000 -> "Rp 1.000.000"
- */
+/*
+    Procedure bertujuan untuk memformat nominal ke format Rupiah dengan separator ribuan.
+    Input : nominal (nilai nominal)
+    Output : result (string format Rupiah, misal "Rp 1.000.000")
+*/
 void format_rupiah(unsigned long long nominal, char *result);
 
-/**
- * @brief Memformat persentase dengan 2 desimal
- * @param persen Nilai persentase
- * @param result Buffer untuk menyimpan hasil (minimal 15 karakter)
- * 
- * Contoh: 62.14159 -> "62.14%"
- */
+/*
+    Procedure bertujuan untuk memformat persentase dengan 2 desimal.
+    Input : persen (nilai persentase)
+    Output : result (string format persentase, misal "62.14%")
+*/
 void format_persentase(double persen, char *result);
 
-/**
- * @brief Memformat nilai rata-rata dengan 2 desimal
- * @param rata Nilai rata-rata
- * @param result Buffer untuk menyimpan hasil (minimal 20 karakter)
- * 
- * Contoh: 29444.33 -> "29.444,33"
- */
+/*
+    Procedure bertujuan untuk memformat nilai rata-rata dengan 2 desimal.
+    Input : rata (nilai rata-rata)
+    Output : result (string format rata-rata, misal "29.444,33")
+*/
 void format_rata_rata(double rata, char *result);
 
-/**
- * @brief Memformat angka dengan separator ribuan (tanpa prefix Rp)
- * @param nominal Nilai yang akan diformat
- * @param result Buffer untuk menyimpan hasil (minimal 25 karakter)
- * 
- * Contoh: 1000000 -> "1.000.000"
- */
+/*
+    Procedure bertujuan untuk memformat angka dengan separator ribuan (tanpa prefix Rp).
+    Input : nominal (nilai yang akan diformat)
+    Output : result (string angka dengan separator, misal "1.000.000")
+*/
 void format_number_separator(unsigned long long nominal, char *result);
 
-/**
- * @brief Memformat nilai saldo (bisa negatif) ke format Rupiah
- * @param saldo Nilai saldo (bisa negatif)
- * @param result Buffer untuk menyimpan hasil (minimal 30 karakter)
- * 
- * Contoh: -100000 -> "-Rp 100.000"
- */
+/*
+    Procedure bertujuan untuk memformat nilai saldo (bisa negatif) ke format Rupiah.
+    Input : saldo (nilai saldo)
+    Output : result (string saldo format Rupiah, misal "-Rp 100.000")
+*/
 void format_saldo(long long saldo, char *result);
 
-/**
- * @brief Mengkonversi string angka ke unsigned long long
- * @param str String yang berisi angka
- * @param result Pointer untuk menyimpan hasil konversi
- * @return 1 jika berhasil, 0 jika gagal
- */
+/*
+    Function bertujuan untuk mengkonversi string angka ke unsigned long long.
+    Input : str (string yang berisi angka)
+    Output : result (menyimpan hasil konversi via pointer). Mengembalikan 1 jika berhasil, 0 jika gagal.
+*/
 int str_to_ull(const char *str, unsigned long long *result);
 
-/**
- * @brief Memeriksa apakah string hanya berisi digit
- * @param str String yang akan diperiksa
- * @return 1 jika hanya digit, 0 jika tidak
- */
+/*
+    Function bertujuan untuk memeriksa apakah string hanya berisi digit.
+    Input : str (string yang akan diperiksa)
+    Output : Mengembalikan 1 jika hanya digit, 0 jika tidak.
+*/
 int is_numeric_string(const char *str);
 
 /* --- utils_string.h --- */
 
-/**
- * @brief Menghapus whitespace di awal dan akhir string
- * @param str String yang akan di-trim (dimodifikasi in-place)
- */
+/*
+    Procedure bertujuan untuk menghapus whitespace di awal dan akhir string.
+    I. S. : str (string mungkin ada whitespace di awal/akhir)
+    F. S. : str tidak lagi memiliki whitespace di awal/akhir.
+*/
 void str_trim(char *str);
 
-/**
- * @brief Mengkonversi string ke uppercase
- * @param str String yang akan dikonversi (dimodifikasi in-place)
- */
+/*
+    Procedure bertujuan untuk mengkonversi string ke uppercase.
+    I. S. : str (string berisi huruf)
+    F. S. : Seluruh huruf kecil di str diubah menjadi huruf besar.
+*/
 void str_to_upper(char *str);
 
-/**
- * @brief Mengkonversi string ke lowercase
- * @param str String yang akan dikonversi (dimodifikasi in-place)
- */
+/*
+    Procedure bertujuan untuk mengkonversi string ke lowercase.
+    I. S. : str (string berisi huruf)
+    F. S. : Seluruh huruf besar di str diubah menjadi huruf kecil.
+*/
 void str_to_lower(char *str);
 
-/**
- * @brief Menyalin string dengan batasan ukuran (safe copy)
- * @param dst Buffer tujuan
- * @param src String sumber
- * @param max Ukuran maksimal buffer tujuan
- */
+/*
+    Procedure bertujuan untuk menyalin string dengan batasan ukuran (safe copy).
+    I. S. : dst (buffer tujuan), src (string sumber), max (ukuran maksimal buffer)
+    F. S. : isi src disalin ke dst (maksimal max-1 karakter), dst null-terminated.
+*/
 void str_copy_safe(char *dst, const char *src, int max);
 
-/**
- * @brief Memisahkan string berdasarkan delimiter
- * @param str String yang akan dipisahkan
- * @param delim Karakter delimiter
- * @param result Array pointer untuk menyimpan hasil split
- * @param max_parts Jumlah maksimal bagian yang dihasilkan
- * @return Jumlah bagian yang dihasilkan
- */
+/*
+    Function bertujuan untuk memisahkan string berdasarkan delimiter.
+    Input : str (string yang dipisahkan), delim (karakter delimiter), max_parts (jumlah maksimal bagian)
+    Output : result (array pointer menyimpan hasil split). Mengembalikan jumlah bagian yang dihasilkan.
+*/
 int str_split(char *str, char delim, char **result, int max_parts);
 
-/**
- * @brief Memeriksa apakah string kosong (hanya whitespace atau NULL)
- * @param str String yang diperiksa
- * @return 1 jika kosong, 0 jika tidak
- */
+/*
+    Function bertujuan untuk memeriksa apakah string kosong (hanya whitespace atau NULL).
+    Input : str (string yang diperiksa)
+    Output : Mengembalikan 1 jika kosong, 0 jika tidak.
+*/
 int str_is_empty(const char *str);
 
-/**
- * @brief Membandingkan dua string secara case-insensitive
- * @param s1 String pertama
- * @param s2 String kedua
- * @return 0 jika sama, non-zero jika berbeda
- */
+/*
+    Function bertujuan untuk membandingkan dua string secara case-insensitive.
+    Input : s1, s2 (string yang dibandingkan)
+    Output : Mengembalikan 0 jika sama, non-zero jika berbeda.
+*/
 int str_compare_nocase(const char *s1, const char *s2);
 
-/**
- * @brief Menghapus karakter newline dari akhir string
- * @param str String yang akan diproses (dimodifikasi in-place)
- */
+/*
+    Procedure bertujuan untuk menghapus karakter newline dari akhir string.
+    I. S. : str (string mungkin ada newline di akhir)
+    F. S. : Karakter newline di akhir str dihapus.
+*/
 void str_remove_newline(char *str);
 
 #endif /* UTILS_H */

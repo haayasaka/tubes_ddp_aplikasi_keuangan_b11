@@ -4,3 +4,4 @@ keuangan
 .cache/
 .zed/
 .DS_Store
+*.txt
