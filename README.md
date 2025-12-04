@@ -5,6 +5,9 @@ Aplikasi pencatatan keuangan berbasis TUI (Text User Interface) untuk membantu m
 ## 👥 Tim Pengembang
 
 **Kelompok B11** - Dasar Pemrograman 2025
+Elang Permadi Lau (251524042)
+Ghaisan Khoirul Badruzaman (251524048)
+Hafiz Fauzan Syafrudin (251524049)
 
 ## ✨ Fitur Utama
 
